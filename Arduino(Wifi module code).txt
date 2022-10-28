@@ -1,0 +1,49 @@
+#include <ESP8266WiFi.h>
+int flag=0;
+const char WiFiAPPSK[] = "12345678";
+String s;
+String rcv="26,72,90,0";
+String rcv1="      ";
+WiFiServer server(80);
+WiFiClient client;
+void setup() 
+{
+    Serial.begin(9600);
+  setupWiFi();
+  server.begin();
+ 
+}
+
+void loop() 
+{
+  client = server.available();
+    if (!client) {
+     if(Serial.available() > 0)
+    {
+      rcv = Serial.readString();
+    } 
+    return;
+  }
+ 
+
+  // Read the first line of the request -------------------------------------
+   String req = client.readStringUntil('\r');
+  // Serial.println(req);
+  if (req.indexOf("PS") != -1)
+  {
+    
+     s = "HTTP/1.1 200 OK\r\nContent-Type:text/html\r\n\r\n";
+    s += rcv;
+    client.print(s);
+   // delay(10000);
+    }
+    return;
+
+}
+
+void setupWiFi()
+{
+  WiFi.mode(WIFI_AP);
+  WiFi.softAP("project1", WiFiAPPSK);
+  Serial.println(WiFi.localIP());
+}

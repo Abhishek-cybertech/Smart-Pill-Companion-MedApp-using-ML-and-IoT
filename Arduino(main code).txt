@@ -1,0 +1,273 @@
+
+#include <LiquidCrystal.h>
+LiquidCrystal lcd(13, 12, 8, 7, 5, 4);
+#include <SoftwareSerial.h>
+SoftwareSerial Rfidserial(2, 3);
+#include<Servo.h>
+Servo Myservo1;
+Servo Myservo2;
+Servo Myservo3;
+Servo Myservo4;
+//int pos;
+String Rx_data_arr;
+//String Rx_status_arr;
+unsigned char RFID_TAG[6][9]={"xxxxxxxx","14853278","09645355","09645377","09645398"};//23250046
+char card[]={'0','0','0','0'};
+int Tag_Detect_Flag = 0,Card_Detect=0;
+void RFID_Tag_Compare_Select();
+int Rfid_flag;
+//=============================================================================================
+//                         SETUP
+//=============================================================================================
+void setup() 
+{
+  Serial.begin(9600);
+  Rfidserial.begin(9600);
+  lcd.begin(16,2);
+  Myservo1.attach(9);
+  Myservo2.attach(10);
+  Myservo3.attach(11);
+  Myservo4.attach(6);
+
+  
+  Myservo1.write(45);
+  Myservo2.write(45);
+  Myservo3.write(45);
+  Myservo4.write(45);
+  delay(2000);
+  Myservo1.write(0);
+  Myservo2.write(0);
+  Myservo3.write(0);
+  Myservo4.write(0);
+  
+  lcd.setCursor(0,0);
+  lcd.print("    WELCOME     "); 
+  delay(2000);
+}
+
+void loop() 
+{
+    lcd.setCursor(0,0);
+    lcd.print("    WELCOME     ");
+    if(Serial.available()>0)
+    {
+        char Rx_data=Serial.read();
+        //Serial.println(Rx_data);
+        if(Rx_data=='2')
+        {
+            lcd.setCursor(0,0);
+            lcd.print("   SWIPE CARD    ");
+            while(Rfid_flag==0)
+            {
+                if(Rfidserial.available()>0)
+                {
+                    Rfid_flag=1; 
+                    Rx_data_arr = Rfidserial.readString();
+              //Rx_data_arr[8]='\0';
+              Serial.println(Rx_data_arr);
+              //lcd.setCursor(0,0);           
+             // lcd.print("                "); 
+             
+              //delay(2000); 
+              //Rx_data_arr=""; 
+             // Serial.flush(); 
+                  RFID_Tag_Compare_Select();
+              }
+              
+            }
+            Rfid_flag=0;
+            if(Card_Detect==1)
+            {
+                lcd.setCursor(0,0);
+                lcd.print("   VALID CARD   ");
+                lcd.setCursor(0,1);
+                lcd.print("    DOLO 650    "); 
+                Myservo1.write(45);
+                delay(3000);
+                Myservo1.write(0); 
+                
+            }
+            else
+            {
+                lcd.setCursor(0,0);
+                lcd.print("  INVALID CARD  "); 
+                delay(2000); 
+            }
+                   
+              
+        }
+        else if(Rx_data=='3')
+        {
+             lcd.setCursor(0,0);
+            lcd.print("   SWIPE CARD    ");
+            while(Rfid_flag==0)
+            {
+                if(Rfidserial.available()>0)
+                {
+                    Rfid_flag=1; 
+                    Rx_data_arr = Rfidserial.readString();
+              //Rx_data_arr[8]='\0';
+              Serial.println(Rx_data_arr);
+              //lcd.setCursor(0,0);           
+             // lcd.print("                "); 
+             
+              //delay(2000); 
+              //Rx_data_arr=""; 
+             // Serial.flush(); 
+                  RFID_Tag_Compare_Select();
+              }
+              
+            }
+            Rfid_flag=0;
+            if(Card_Detect==1)
+            {
+                lcd.setCursor(0,0);
+                lcd.print("   VALID CARD   ");
+                lcd.setCursor(0,1);
+                lcd.print("     CROCIN     "); 
+                Myservo2.write(45);
+                delay(3000);
+                Myservo2.write(0); 
+                
+            }
+            else
+            {
+                lcd.setCursor(0,0);
+                lcd.print("  INVALID CARD  "); 
+                delay(2000); 
+            }   
+        }
+        else if(Rx_data=='4')
+        {
+            lcd.setCursor(0,0);
+            lcd.print("   SWIPE CARD    ");
+            while(Rfid_flag==0)
+            {
+                if(Rfidserial.available()>0)
+                {
+                    Rfid_flag=1; 
+                    Rx_data_arr = Rfidserial.readString();
+              //Rx_data_arr[8]='\0';
+              Serial.println(Rx_data_arr);
+              //lcd.setCursor(0,0);           
+             // lcd.print("                "); 
+             
+              //delay(2000); 
+              //Rx_data_arr=""; 
+             // Serial.flush(); 
+                  RFID_Tag_Compare_Select();
+              }
+              
+            }
+            Rfid_flag=0;
+            if(Card_Detect==1)
+            {
+                lcd.setCursor(0,0);
+                lcd.print("   VALID CARD   ");
+                lcd.setCursor(0,1);
+                lcd.print("   REMDESIVIR   "); 
+                Myservo3.write(45);
+                delay(3000);
+                Myservo3.write(0); 
+                
+            }
+            else
+            {
+                lcd.setCursor(0,0);
+                lcd.print("  INVALID CARD  "); 
+                delay(2000); 
+            }    
+        }
+        else if(Rx_data=='5')
+        {
+             lcd.setCursor(0,0);
+            lcd.print("   SWIPE CARD    ");
+            while(Rfid_flag==0)
+            {
+                if(Rfidserial.available()>0)
+                {
+                    Rfid_flag=1; 
+                    Rx_data_arr = Rfidserial.readString();
+              //Rx_data_arr[8]='\0';
+              Serial.println(Rx_data_arr);
+              //lcd.setCursor(0,0);           
+             // lcd.print("                "); 
+             
+              //delay(2000); 
+              //Rx_data_arr=""; 
+             // Serial.flush(); 
+                  RFID_Tag_Compare_Select();
+              }
+              
+            }
+            Rfid_flag=0;
+            if(Card_Detect==1)
+            {
+                lcd.setCursor(0,0);
+                lcd.print("   VALID CARD   ");
+                lcd.setCursor(0,1);
+                lcd.print("  PARACETAMOL   "); 
+                Myservo4.write(45);
+                delay(3000);
+                Myservo4.write(0); 
+                
+            }
+            else
+            {
+                lcd.setCursor(0,0);
+                lcd.print("  INVALID CARD  "); 
+                delay(2000); 
+            }        
+        }
+        lcd.clear();
+    }
+
+
+
+
+            
+
+
+
+}
+void RFID_Tag_Compare_Select( void )
+{
+  unsigned char i,j;
+
+  RFID_TAG[0][0] = Rx_data_arr[0];
+  RFID_TAG[0][1] = Rx_data_arr[1];
+  RFID_TAG[0][2] = Rx_data_arr[2];
+  RFID_TAG[0][3] = Rx_data_arr[3];
+  RFID_TAG[0][4] = Rx_data_arr[4];
+  RFID_TAG[0][5] = Rx_data_arr[5];
+  RFID_TAG[0][6] = Rx_data_arr[6];
+  RFID_TAG[0][7] = Rx_data_arr[7];
+
+  Tag_Detect_Flag = 0;
+  Card_Detect = 0;
+  for( i=1; i<=4; i++ )
+  {
+    j = 0;
+    while(1)
+    {
+      if( RFID_TAG[0][j] == RFID_TAG[i][j] )
+      {
+        j++;
+        if( j == 8 )
+        {
+          Tag_Detect_Flag = 1;
+          break;
+        }
+      }
+
+      else
+        break;
+     }
+    if( Tag_Detect_Flag == 1 )
+    {
+      Card_Detect = i;
+      //card[i-1]='1';
+       break;
+    }
+  }
+}
