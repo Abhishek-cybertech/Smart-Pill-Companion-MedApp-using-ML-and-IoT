@@ -19,3 +19,10 @@ README
 11.	 If you want to make changes to the Arduino Code, then copy the Arduino (main code) text file contents to Arduino IDE and after making the changes upload it to the Arduino microcontroller board via the connecting wire.
 
  
+![Screenshot 2022-10-28 221140](https://user-images.githubusercontent.com/64909391/198689658-36a0921a-5933-48d8-861f-ddcdb9422bd5.png)
+
+
+![Screenshot 2022-10-28 221217](https://user-images.githubusercontent.com/64909391/198689683-ea42c489-9dfb-4310-bff2-ce7e8ef8be72.png)
+
+
+![Screenshot 2022-10-28 221253](https://user-images.githubusercontent.com/64909391/198689702-6af393a6-de78-409d-a59a-92465a641cc9.png)
